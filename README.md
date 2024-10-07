@@ -42,6 +42,8 @@ Functional Simulation:
       
 	After this you can see the window like below 
 
+![Screenshot (14)](https://github.com/user-attachments/assets/8f4f71db-6fef-4d78-b9f1-0671bb3a7cdb)
+
 
 ## Fig 2: Invoke the Cadence Environment
 
@@ -56,7 +58,34 @@ Functional Simulation:
 
 ### Verilog code for 4-Bit Up-Down Counter:
 
-*/Program  for  4-Bit Up-Down Counter
+`timescale 1ns / 1 ns
+
+module counter(clk,m,rst,count);
+
+input clk,m,rst;
+
+output reg [3:0] count;
+
+always@(posedge clk or negedge rst)
+
+begin
+
+if (!rst)
+
+count=0;
+
+else if(m)
+
+count=count+1;
+
+else
+
+count=count-1;
+
+end
+
+endmodule
+
 
 	Use Save option or Ctrl+S to save the code or click on the save option from the top most right corner and close the text file.
 
@@ -66,7 +95,48 @@ Functional Simulation:
 
 ### Test-bench code for 4-Bit Up-Down Counter:
 
-*/Test bench Program  for  4-Bit Up-Down Counter
+`timescale 1ns / 1ns
+
+module counter_test;
+
+reg clk,rst,m;
+
+wire [3:0] count;
+
+initial
+
+begin
+
+clk=0;
+
+rst=0;#5;
+
+rst=1;
+
+end
+
+initial
+
+begin
+
+m=1;
+
+#160 m=0;
+
+end
+
+counter counter1 (clk,m,rst, count);
+
+always #5 clk=~clk;
+ 
+initial $monitor("Time=%t rst=%b clk=%b count=%b" , $time,rst,clk,count);
+
+initial
+
+#320 $finish;
+
+endmodule
+
 
 ### To Launch Simulation tool
 	linux:/> nclaunch -new&            // “-new” option is used for invoking NCVERILOG for the first time for any design
@@ -75,11 +145,17 @@ Functional Simulation:
 
 It will invoke the nclaunch window for functional simulation we can compile,elaborate and simulate it using Multiple step
 
+![Screenshot (15)](https://github.com/user-attachments/assets/22cc2089-3b79-4f8c-a4e4-2582c68c8f86)
+
+
 ## Fig 3: Setting Multi-step simulation
 
 Select Multiple Step and then select “Create cds.lib File” as shown in below figure
 
 Click the cds.lib file and save the file by clicking on Save option
+
+![Screenshot (16)](https://github.com/user-attachments/assets/ce3bcc53-5f05-46ab-b80d-dd76b7dde990)
+
 
 ## Fig 4: cds.lib file Creation
 
@@ -88,6 +164,9 @@ Click the cds.lib file and save the file by clicking on Save option
 	Select “Don’t include any libraries (verilog design)” from “New cds.lib file” and click on “OK” as in below figure
 
 	We are simulating verilog design without using any libraries
+
+![Screenshot (17)](https://github.com/user-attachments/assets/d64dc863-4d97-46c5-855e-a306edaec055)
+
 
 ## Fig 5: Selection of Don’t include any libraries
 
@@ -122,6 +201,9 @@ i.e Cadence IES command for compile: ncverilog +access+rwc -compile fa.v
 Left side select the file and in Tools : launch verilog compiler with current selection will get enable. Click it to compile the code 
 
 Worklib is the directory where all the compiled codes are stored while Snapshot will have output of elaboration which in turn goes for simulation 
+
+![Screenshot (18)](https://github.com/user-attachments/assets/8a44e792-cd4b-4dcf-8bd8-69b17d36e636)
+
 
 ## Fig 7: Compiled database in worklib
 
@@ -164,9 +246,15 @@ It contains statements that map logical library names to their physical director
 
 	Steps for simulation – Run the simulation command with simulator options
 
+![Screenshot (19)](https://github.com/user-attachments/assets/7fafb50f-0bae-437a-8222-cb00794f2225)
+
+
 ## Fig 9: Design Browser window for simulation
+
+![Screenshot (20)](https://github.com/user-attachments/assets/e9f550c8-e77c-45fa-a9cc-238a1eb1fb91)
+
 
 ## Fig 10: Simulation Waveform Window
 
-## Fig 11: Simulation Waveform Window
+
 
